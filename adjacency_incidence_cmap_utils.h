@@ -22,8 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+#ifndef ADJACENCY_INCIDENCE_CMAP_UTILS_H
+#define ADJACENCY_INCIDENCE_CMAP_UTILS_H
+
 // Compute the index of the inverse beta transformation.
-inline unsigned int inv(unsigned int i){
+unsigned int inv(unsigned int i){
   return (i>1) ? i : (1-i);
 }
 
@@ -102,3 +105,5 @@ bool check_adjacent_pair(CMap &cm, typename CMap::Dart_handle &dh_1, typename CM
   cm.free_mark(ma);
   return result;
 }
+
+#endif

@@ -1,5 +1,6 @@
 #include <CGAL/Combinatorial_map.h>
 #include "adjacency_incidence_cmap_utils.h"
+#include "lcc_inc_graph_utils.h"
 
 #include <iostream>
 
@@ -16,7 +17,6 @@ int main(){
   cm.sew<1>(dh2,dh3);
   cm.sew<1>(dh3,dh4);
   cm.sew<1>(dh4,dh1);
-  CM_2::size_type ma = cm.get_new_mark();
-  mark_darts_in_cell<CM_2, 2>(cm, dh1, ma);
+  write_inc<CM_2>(cm);
   return 0;
 }

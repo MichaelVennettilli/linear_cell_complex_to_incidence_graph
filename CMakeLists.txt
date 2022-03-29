@@ -3,7 +3,7 @@
 
 cmake_minimum_required(VERSION 3.1...3.15)
 
-project( cmap_to_inc_graph )
+project( lcc_to_inc_graph )
 
 
 # CGAL and its components
