@@ -72,20 +72,16 @@ void export_incidence_graph(CMap &cm, std::string filename){
         high_it=cm.template one_dart_per_cell<higher_dim>().begin(), high_end=cm.template one_dart_per_cell<higher_dim>().end();
         high_it!=high_end;++high_it){
         // Mark the given cell, then loop over lower dimensional cells.
-        std::cout << "marking" << std::endl;
         mark_darts_in_cell<CMap,higher_dim>(cm, high_it, ma);
-        std::cout << "marked" << std::endl;
         for(typename CMap::template One_dart_per_cell_range<lower_dim>::iterator
           low_it=cm.template one_dart_per_cell<lower_dim>().begin(),
           low_end=cm.template one_dart_per_cell<lower_dim>().end();
-          low_it!=low_end;++low_end){
-          std::cout << "check incidence" << std::endl;
-          if(check_incident_pair<CMap,higher_dim, lower_dim>(cm, high_it, low_it)){
+          low_it!=low_end;++low_it){
+          if(is_dart_in_cell_marked<CMap,lower_dim>(cm,low_it,ma)){
             incidence_graph.push_back(std::make_pair(dictionary_vector[higher_dim][high_it], dictionary_vector[lower_dim][low_it]));
-            std::cout << dictionary_vector[higher_dim][high_it] << ", " << dictionary_vector[lower_dim][low_it] << std::endl;
           }
         }
-        std::cout << "unmarking" << std::endl;
+        // Unmark and move on.
         unmark_darts_in_cell<CMap,higher_dim>(cm, high_it, ma);
       }
   };
@@ -104,8 +100,10 @@ void export_incidence_graph(CMap &cm, std::string filename){
   std::ofstream strm;
   strm.open(filename,std::ofstream::out|std::ofstream::trunc);
   for(int edge_index = 0; edge_index < incidence_graph.size(); edge_index++){
-    strm << "(" << incidence_graph[edge_index].first << ", " << incidence_graph[edge_index].second << std::endl;
+    strm << "(" << incidence_graph[edge_index].first << ", " << incidence_graph[edge_index].second << ")" << std::endl;
   }
+  cm.free_mark(ma);
+
   return;
 }
 
