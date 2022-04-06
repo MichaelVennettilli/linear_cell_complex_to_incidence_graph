@@ -1,3 +1,4 @@
+set(CMAKE_CXX_STANDARD 17)
 # Created by the script cgal_create_CMakeLists
 # This is the CMake script for compiling a set of CGAL applications.
 
