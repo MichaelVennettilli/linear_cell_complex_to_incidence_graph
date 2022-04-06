@@ -1,14 +1,16 @@
-#include <CGAL/Combinatorial_map.h>
+#include <CGAL/Linear_cell_complex_for_combinatorial_map.h>
 
-#include <iostream>
-#include "inc_graph_utils.h"
+#include "adjacency_incidence_cmap_utils.h"
 
-typedef CGAL::Combinatorial_map<3> CM;
-typedef CM::Dart_handle Dart_handle;
+typedef CGAL::Linear_cell_complex_for_combinatorial_map<3> LCC_3;
+typedef LCC_3::Dart_handle Dart_handle;
+typedef LCC_3::Point Point;
+
 
 int main(){
-  CM cm;
-  cm.make_combinatorial_tetrahedron();
-  export_incidence_graph<CM,cm.dimension>(cm, "test.csv");
+  LCC_3 lcc;
+  lcc.make_tetrahedron(Point(0,0,0),Point(1,0,0),Point(0,1,0),Point(0,0,1));
+  export_incidence_graph<LCC_3,lcc.dimension>(lcc, "test_inc.csv");
+  export_vertices<LCC_3>(lcc, "test_points.csv");
   return 0;
 }
