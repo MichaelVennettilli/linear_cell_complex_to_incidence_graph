@@ -130,6 +130,9 @@ void export_incidence_graph(CMap &cm, std::string filename){
   Incidence_graph_by_layers incidence_graph;
   // Reserve a mark
   typename CMap::size_type ma = cm.get_new_mark();
+  // Create the printing objects
+  std::ofstream strm;
+  strm.open(filename,std::ofstream::out|std::ofstream::trunc);
 
   // Create the lambda that will sets the i-th component of the dictionary vector.
   auto make_dictionary_layer = [&]<int i>(std::integral_constant<int, i> dim){
@@ -142,6 +145,12 @@ void export_incidence_graph(CMap &cm, std::string filename){
       dictionary_layer[dart_it] = std::to_string(dim) + "_" + std::to_string(counter++);
     }
     dictionary_vector.push_back(dictionary_layer);
+    strm << counter;
+    if(dim < max_dimension){
+      strm << ", ";
+    } else {
+      strm << std::endl;
+    }
   };
 
   // Create the lambda that adds one layer to the incidence graph
@@ -175,9 +184,7 @@ void export_incidence_graph(CMap &cm, std::string filename){
     (make_incidence_layer(std::integral_constant<int, Is>{}, std::integral_constant<int, Is+1>{}), ...);
   }(seq_for_compare{});
 
-  // Write to file
-  std::ofstream strm;
-  strm.open(filename,std::ofstream::out|std::ofstream::trunc);
+  // Write the dictionary to file
   for(int edge_index = 0; edge_index < incidence_graph.size()-1; edge_index++){
     strm << incidence_graph[edge_index].first << ", " << incidence_graph[edge_index].second << std::endl;
   }
@@ -201,7 +208,6 @@ void export_vertices(Lcc &lcc, std::string filename){
     dart_it=lcc.template one_dart_per_cell<0>().begin(),
     dart_it_end=lcc.template one_dart_per_cell<0>().end();
     dart_it!=dart_it_end;){
-    strm << "0_" + std::to_string(counter++) << ", ";
     current_point = lcc.point(dart_it);
     for(int coordinate=0; coordinate < dimension-1;coordinate++) strm << current_point[coordinate] << ", ";
     strm << current_point[dimension-1];
