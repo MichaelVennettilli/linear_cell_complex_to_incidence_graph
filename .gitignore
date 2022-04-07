@@ -1,6 +1,0 @@
-build/
-test_inc.csv
-test_points.csv
-shell_partitioner.h
-.gitignore
-__pycache__/
