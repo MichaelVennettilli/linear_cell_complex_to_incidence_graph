@@ -93,7 +93,7 @@ def generate_points(csv_with_points):
     return point_list
 
 
-def plot_triangulated_complex_random_color(csv_with_adjacency, csv_with_points):
+def plot_triangulated_complex_random_color(csv_with_adjacency, csv_with_points, alpha=0.5):
     [volume_to_face_list, face_to_vertex_list] = generate_adjacency_structures(csv_with_adjacency)
     vertex_positions = generate_points(csv_with_points)
     fig = plt.figure()
@@ -118,8 +118,8 @@ def plot_triangulated_complex_random_color(csv_with_adjacency, csv_with_points):
                         vertex_positions[face_to_vertex_list[face][2]]]
             drawn_face = a3.art3d.Poly3DCollection([triangle])
             drawn_face.set_color(colors.rgb2hex(color_vec))
-            # face.set_edgecolor()
-            drawn_face.set_alpha(0.5)
+            drawn_face.set_edgecolor('none')
+            drawn_face.set_alpha(alpha)
             ax.add_collection3d(drawn_face)
 
     # ax = plt.gca(projection='3d')
