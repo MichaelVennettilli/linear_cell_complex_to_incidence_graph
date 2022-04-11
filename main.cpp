@@ -1,5 +1,5 @@
 #include <CGAL/Linear_cell_complex_for_combinatorial_map.h>
-#include "shell_partitioner.h"
+#include "minimal_shell_partitioner.h"
 #include "adjacency_incidence_cmap_utils.h"
 
 typedef CGAL::Linear_cell_complex_for_combinatorial_map<3> LCC_3;
